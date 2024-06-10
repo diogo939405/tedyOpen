@@ -1,0 +1,68 @@
+<div class="todo">
+    <header>
+        <app-menu></app-menu>
+    </header>
+    <div class="container">
+        <p-panel header="Lista de Parceiros" [style]="{ 
+    width: '60rem',
+    fontFamily: 'fangsong',  
+    fontSize: '20px',  
+    border: '2px solid black',  
+    borderRadius: '9px',
+    
+}">
+            <ng-template pTemplate="header">
+                <div class="flex align-items-center gap-2">
+                </div>
+            </ng-template>
+            <p-confirmPopup />
+            <p-toast />
+            <p-table #dt1 [value]="clientes" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="10"
+                [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
+                [paginator]="true"
+                currentPageReportTemplate="Exibindo as {first} de {last} do total {totalRecords} registros"
+                [globalFilterFields]="['name', 'description', 'urlDoc', 'repositoryGit', 'clients', 'projects', 'status']">
+                <ng-template pTemplate="caption">
+                    <div class="flex">
+                        <span class="p-input-icon-left ml-auto">
+                            <input pInputText type="text"
+                                (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                                placeholder="Pesquisar" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pFrozenColumn>Excluir</th>
+                        <th pFrozenColumn>Editar</th>
+                        <th style="width: 30%;" pSortableColumn="companyName" pFrozenColumn>Nome</th>
+                        <th style="width: 50px;" pSortableColumn="collaboratorsCount">Colaboradores</th>
+                        <th pSortableColumn="lastSubmit">Envio</th>
+                        <th pSortableColumn="isActive">Ativo</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-cliente>
+                    <tr>
+                        <td pFrozenColumn><p-button icon="pi pi-trash" severity="danger" rounded="true"
+                                class="p-button-sm" (click)="excluirParceiro($event, cliente)" id="lixo"></p-button>
+                        </td>
+                        <td pFrozenColumn>
+                            <div class="icons">
+                                <p-button icon="pi pi-pencil" severity="danger" rounded="true" class="p-button-sm"
+                                    (click)="editarParceiro(cliente)" id="lixo"></p-button>
+                            </div>
+                        </td>
+                        <td style="width: 30%;" pFrozenColumn>{{ cliente.companyName }}</td>
+                        <td>{{ cliente.collaboratorsCount }}</td>
+                        <td>{{ cliente.lastSubmit | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                        <td><p-toggleButton [(ngModel)]="cliente.isActive" onLabel="Ativo" offLabel="Inativo" /></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-panel>
+        <p-dialog header="Cadastro de Parceiros - Edição" [modal]="true" [(visible)]="visible"
+            [style]="{ width: '75rem' }">
+            <app-cliente-cada></app-cliente-cada>
+        </p-dialog>
+    </div>
+</div>

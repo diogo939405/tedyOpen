@@ -1,0 +1,88 @@
+<div class="todo">
+
+    <header>
+        <app-menu></app-menu>
+    </header>
+    <div class="containerEmpre">
+        <p-panel header="Lista de Empresas" [style]="{ 
+    width: '90rem',  
+    fontFamily: 'fangsong',  
+    fontSize: '20px',  
+    border: '2px solid black',  
+    borderRadius: '9px',
+    
+}">
+            <ng-template pTemplate="header">
+                <div class="flex align-items-center gap-2">
+
+                </div>
+            </ng-template>
+
+            <p-table #dt1 [value]="empresas" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="10"
+                [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
+                [paginator]="true"
+                currentPageReportTemplate="Exibindo as {first} de {last} do total {totalRecords} registros"
+                [globalFilterFields]="['name', 'description', 'urlDoc', 'repositoryGit', 'clients', 'projects', 'status']"
+                class="">
+                <ng-template pTemplate="caption">
+                    <div class="flex">
+
+                        <span class="p-input-icon-left ml-auto">
+
+                            <input pInputText type="text"
+                                (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                                placeholder="Search keyword" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pFrozenColumn>Excluir</th>
+                        <th pFrozenColumn>Editar</th>
+                        <th style="width: 30%;" pSortableColumn="name" pFrozenColumn>Nome</th>
+                        <th style="width: 50px;" pSortableColumn="description">Descrição</th>
+                        <th pSortableColumn="createAt">DtCriação</th>
+                        <th pSortableColumn="repositoryGit">Git Reposiroty</th>
+                        <th pSortableColumn="urlDoc">Url Doc</th>
+                        <th pSortableColumn="clients">Clientes</th>
+                        <th pSortableColumn="projects">Projetos</th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-empresa>
+                    <tr>
+                        <td pFrozenColumn><p-button icon="pi pi-trash" severity="danger" rounded="true"
+                                class="p-button-sm" (click)="excluirEmpresa($event, empresa)" id="lixo"></p-button>
+                        </td>
+                        <td pFrozenColumn>
+                            <div class="icons">
+                                <p-button icon="pi pi-pencil" severity="danger" rounded="true" class="p-button-sm"
+                                    (click)="editarEmpresa(empresa)" id="lixo"></p-button>
+                            </div>
+                        </td>
+                        <!-- 
+
+                        <td pFrozenColumn>
+                            <div class="icons">
+                                <span class="material-icons" id="lixo">delete</span>
+                            </div>
+                        </td>
+                        <td pFrozenColumn>
+                            <div class="icons">
+                                <span class="material-icons" id="edit">edit</span>
+                            </div>
+                        </td> -->
+                        <td style="width: 30%;" pFrozenColumn>{{ empresa.name }}</td>
+                        <td>{{ empresa.description }}</td>
+                        <td>{{ empresa.createAt }}</td>
+                        <td>{{ empresa.repositoryGit }}</td>
+                        <td>{{ empresa.urlDoc }}</td>
+                        <td>{{ empresa.clients }}</td>
+                        <td>{{ empresa.projects }}</td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-panel>
+    </div>
+</div>

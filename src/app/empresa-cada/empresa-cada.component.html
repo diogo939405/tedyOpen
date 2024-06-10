@@ -1,0 +1,38 @@
+<div class="todo">
+    <header class="cabeça">
+        <app-menu></app-menu>
+    </header>
+    <div class="fundo">
+        <main>
+            <form id="survey-form">
+                <div id="header">
+                    <h1 id="title" class="titulo">Cadastro de Empresa</h1>
+                    <p id="description" class="descricao">Preencha os campos abaixo para cadastra uma nova empresa</p>
+                </div>
+
+                <div>
+                    <label for="name" id="name-label">Nome da empresa</label>
+                    <input type="text" id="name" [(ngModel)]="empresa.name" [ngModelOptions]="{standalone: true}"
+                        placeholder="Digite o nome da empresa" required>
+                </div>
+                <div>
+                    <label for="email" id="email-label">Descrição</label>
+                    <input type="email" id="email" [(ngModel)]="empresa.description"
+                        [ngModelOptions]="{standalone: true}" pattern=".+@.+..+"
+                        placeholder="informe o numero de colaboradores" required>
+                </div>
+                <div>
+                    <label for="name" id="name-label">url Doc</label>
+                    <input type="text" id="name" [(ngModel)]="empresa.urlDoc" [ngModelOptions]="{standalone: true}"
+                        placeholder="Enter your name" required>
+                </div>
+                <div>
+                    <label for="name" id="name-label">Repositório Git</label>
+                    <input type="text" id="name" [(ngModel)]="empresa.repositoryGit"
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter your name" required>
+                </div>
+                ><button (click)="gravar()">Enviar</button>
+            </form>
+        </main>
+    </div>
+</div>
